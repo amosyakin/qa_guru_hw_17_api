@@ -2,10 +2,8 @@ import requests
 from jsonschema import validate
 from schemas.users import get_users, post_users, put_users
 
-base_url = "https://reqres.in"
 
-
-def test_get_users():
+def test_get_users(base_url):
     url = base_url + '/api/users'
 
     response = requests.get(url, params='page=2')
@@ -16,7 +14,7 @@ def test_get_users():
     validate(response_json_body, get_users)
 
 
-def test_create_users():
+def test_create_users(base_url):
     url = base_url + '/api/users'
     body = {
         "name": "alex",
@@ -28,7 +26,7 @@ def test_create_users():
     validate(response_json_body, post_users)
 
 
-def test_change_users():
+def test_change_users(base_url):
     url = base_url + '/api/users/2'
     body = {
         "name": "alex",
@@ -40,14 +38,15 @@ def test_change_users():
     validate(response_json_body, put_users)
 
 
-def test_delete_users():
+def test_delete_users(base_url):
     url = base_url + '/api/users/2'
 
     response = requests.delete(url)
     assert response.status_code == 204
+    assert response.text == ''
 
 
-def test_user_not_found():
+def test_user_not_found(base_url):
     url = base_url + '/api/users/23'
 
     response = requests.get(url)

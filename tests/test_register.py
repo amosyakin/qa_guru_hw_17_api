@@ -3,10 +3,7 @@ from jsonschema import validate
 from schemas.register import post_register
 
 
-base_url = "https://reqres.in"
-
-
-def test_user_register():
+def test_user_register(base_url):
     url = base_url + '/api/register'
     body = {
         "email": "eve.holt@reqres.in",
@@ -18,7 +15,7 @@ def test_user_register():
     validate(response_json_body, post_register)
 
 
-def test_user_register_without_password():
+def test_user_register_without_password(base_url):
     url = base_url + '/api/register'
     body = {
         "email": "eve.holt@reqres.in"
@@ -29,7 +26,7 @@ def test_user_register_without_password():
     assert response_json_body['error'] == "Missing password"
 
 
-def test_user_register_without_email():
+def test_user_register_without_email(base_url):
     url = base_url + '/api/register'
     body = {
         "password": "pistol"
@@ -40,7 +37,7 @@ def test_user_register_without_email():
     assert response_json_body['error'] == "Missing email or username"
 
 
-def test_user_register_with_empty_body():
+def test_user_register_with_empty_body(base_url):
     url = base_url + '/api/register'
     body = {
 
